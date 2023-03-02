@@ -23,7 +23,7 @@ Luckily, another approach has already been pioneered in the
 context of ProjectAtomic: run libvirt 
 [in a Container](https://github.com/projectatomic/docker-image-examples/blob/master/rhel-libvirt/libvirtd/Dockerfile).
 I've taken this as a starting point and made some adaptions. 
-I've put everything in directory [fedora-base](fedora-base) because
+I've put everything in directory [fedora-based](fedora-based) because
 it is a Fedora-based container for libvirt. In case
 RedHat drops Spice support from Fedora as well, it shouldn't be
 too difficult to create a sibling directory with e.g. an Arch
