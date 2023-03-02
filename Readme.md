@@ -28,3 +28,9 @@ it is a Fedora-based container for libvirt. In case
 RedHat drops Spice support from Fedora as well, it shouldn't be
 too difficult to create a sibling directory with e.g. an Arch
 based container for libvirt.
+
+I have tested my approach with AlmaLinux, that's why you find it
+in the title. It should run on RHEL and Rocky Linux as well.
+I'll dedicated only limited resources to this. IMHO the way to go is
+a kubernetes operator that runs VMs without libvirt, because libvirt
+duplicates several mechanisma that k8s provides already.

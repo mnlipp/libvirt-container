@@ -14,6 +14,7 @@ Environment=PODMAN_SYSTEMD_UNIT=%n
 Restart=always
 TimeoutStopSec=61
 ExecStartPre=/bin/rm -f %t/%n.ctr-id
+ExecStartPre=mkdir -p /var/run/libvirt
 ExecStart=/usr/bin/podman run \
 	--cidfile=%t/%n.ctr-id \
 	--cgroups=no-conmon \
