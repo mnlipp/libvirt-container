@@ -1,0 +1,31 @@
+# Based on https://github.com/projectatomic/docker-image-examples/blob/master/rhel-libvirt/libvirtd/Dockerfile
+
+FROM docker.io/fedora:37
+
+# Adding firewalld-filesystem here makes sure that the configuration files
+# for zone libvirt are installed and thus available.
+RUN dnf --assumeyes upgrade \
+    && dnf --assumeyes install firewalld-filesystem dnsmasq \
+    && dnf --assumeyes install qemu qemu-kvm libvirt \
+    && dnf --assumeyes clean all
+
+# Remove all targets excect those that we really want.
+# We use the system dbus from the host, which already runs. Commenting out the line
+# with BusName prevents this systemd from trying to start its own. (Disabling the
+# socket makes sure that we detect possible additional future attempts.)
+RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+    rm -f /lib/systemd/system/multi-user.target.wants/*;\
+    rm -f /etc/systemd/system/*.wants/*;\
+    rm -f /lib/systemd/system/local-fs.target.wants/*; \
+    rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
+    rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
+    rm -f /lib/systemd/system/basic.target.wants/*;\
+    rm -f /lib/systemd/system/anaconda.target.wants/*; \
+    sed -i -e 's/^\(BusName=.*\)/#\1/' /usr/lib/systemd/system/systemd-machined.service; \
+    systemctl disable --system dbus.socket; \
+    systemctl disable --system dbus-broker; \
+    systemctl enable libvirtd; \
+    systemctl enable virtlockd; \
+    systemctl set-default multi-user.target
+
+CMD ["/sbin/init"]
