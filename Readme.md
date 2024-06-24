@@ -1,5 +1,5 @@
 *The next step towards the final goal can be found [here](https://github.com/mnlipp/kube-qemu-legacy).*
-*The final solution, however, is the [VM-Operator](https://mnlipp.github.io/VM-Operator/).*
+*The final solution, however, is the [VM-Operator](https://jdrupes.org/vm-operator/).*
 
 # AlmaLinux 9.1 etc. and VMs with Spice
 
